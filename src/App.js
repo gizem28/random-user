@@ -20,7 +20,8 @@ function App() {
    }).catch(error=>{
      console.log(error);
      setLoading(true);
-   }).finally(()=>{
+   })
+   .finally(()=>{
      setLoading(false);
      setActiveUser(true);
    })
@@ -44,18 +45,18 @@ function App() {
       `My phone number is ${user.phone} `,
       `My password is ${user.login.password} `
      ]
-     return <h1>{phrases[activeLink]} </h1>
+     return <h1 style={{color:"#707070"}}>{phrases[activeLink]} </h1>
   }
 
   const activeLinkHandler =(index)=>{
   setActiveLink(index);
   }
   const style ={
-    color:"grey"
+    color:"#707070"
   }
   return (
     <div className="App">
-      <h1>Random User Generator App</h1>
+      <h1 style={{margin:30,  color:"#707070", fontWeight:"bolder"}}>Random User Generator App</h1>
       <Button isActive={activeUser} clicked={onClickHandler}/>
       {loading ? (
         <h1>Loading...</h1>):(
@@ -63,9 +64,9 @@ function App() {
             {userData.map((user, index)=>{
               return(
                 <Fragment key={user.cell}>
-                  <img src={user.picture.large} alt="#"/>
+                  <img style={{margin:30}} src={user.picture.large} alt="#"/>
                   <PhraseGeneretor user={user}/>
-                  <div className='app__icons'>
+                  <div style={{margin:50}} className='app__icons'>
                   {icons.map((icon,index)=>{
                     return (
                     <i className={icon} key={index} onMouseOver={()=> activeLinkHandler(index)}

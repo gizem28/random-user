@@ -11,6 +11,7 @@ function App() {
   
 
   const onClickHandler= () =>{
+    setActiveLink(0);
    setLoading(true);
    axios.get('https://randomuser.me/api/')
    .then((response)=>{
@@ -34,8 +35,23 @@ function App() {
     'fas fa-lock fa-4x'
   ]
 
-  const PhraseGeneretor=()=>{
+  const PhraseGeneretor=({user})=>{
+     const phrases = [
+      `Hi my name is ${user.name.first} ${user.name.last}`,
+      `My email address is ${user.email}`,
+      `I was born on ${user.dob.date.slice(0,10)} `,
+      `My country is ${user.location.country} `,
+      `My phone number is ${user.phone} `,
+      `My password is ${user.login.password} `
+     ]
+     return <h1>{phrases[activeLink]} </h1>
+  }
 
+  const activeLinkHandler =(index)=>{
+  setActiveLink(index);
+  }
+  const style ={
+    color:"grey"
   }
   return (
     <div className="App">
@@ -48,9 +64,12 @@ function App() {
               return(
                 <Fragment key={user.cell}>
                   <img src={user.picture.large} alt="#"/>
+                  <PhraseGeneretor user={user}/>
                   <div className='app__icons'>
                   {icons.map((icon,index)=>{
-                    return <i className={icon} key={index}></i>
+                    return (
+                    <i className={icon} key={index} onMouseOver={()=> activeLinkHandler(index)}
+                    style={activeLink === index ? style:null}></i>);
                   })}
                   </div>
                 </Fragment>
